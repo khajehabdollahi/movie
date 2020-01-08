@@ -8,7 +8,6 @@ export default {
   },
   template: `
     <div id="app">
-      <h1>Add Movie</h1>
       <AddMovie @newMovie="onNewMovie"></AddMovie>
       <br>
       <MovieList :movies="movies" />
@@ -22,6 +21,12 @@ export default {
   methods: {
     onNewMovie(movie) {
       this.movies.push(movie)
+      localStorage.setItem('localmovies', JSON.stringify(this.movies));
     }
+  },
+  created() {
+    if (localStorage.getItem("localmovies") !== null) {
+      this.movies = JSON.parse(localStorage.getItem('localmovies')) 
+    } 
   }
 }
